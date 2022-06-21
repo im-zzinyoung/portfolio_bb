@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<!-- mainslider 추가 -->
+		<script type="text/javascript">
+			//sevice_mainslider
+			(function (window, $) {
+				function sliderInit(container, speed) {
+					var sliderWrap = $(container),
+						slider = sliderWrap.find(".mainSlide_default"),
+						speed = speed || 2000;
+
+					slider.each(function () {
+						var winWidth,
+							slider = $(this),
+							sliderBtn = slider.next().find(".btn_slider");
+
+						$(window).on("resize", function () {
+							winWidth = $(window).outerWidth();
+							if (winWidth <= 1100) {
+								if (!slider.hasClass("slick-initialized")) {
+									sliderSetOptions(slider, speed);
+									sliderBtn.removeClass("pause").find("span").text("Play");
+								}
+							}
+						});
+
+						sliderBtn.on("click", function (e) {
+							e.preventDefault();
+							if (!$(this).hasClass("pause")) {
+								$(this).addClass("pause").find("span").text("Pause");
+								slider.slick("slickPause");
+							} else {
+								$(this).removeClass("pause").find("span").text("Play");
+								slider.slick("slickPlay");
+							}
+						});
+					});
+				}
+
+				function sliderSetOptions(slider, speed) {
+					slider.not(".slick-initialized").slick({
+						responsive: [
+							{
+								breakpoint: 9999,
+								settings: "unslick",
+							},
+							{
+								breakpoint: 1101,
+								settings: {
+									dots: true,
+									arrows: false,
+									infinite: false,
+									autoplay: false,
+									autoplaySpeed: speed,
+									slidesToShow: 1,
+									slidesToScroll: 1,
+									appendDots: $(".slick-nav"),
+									vertical: false,
+									adaptiveHeight: false,
+								},
+							},
+						],
+					});
+				}
+
+				sliderInit(".main .wrapper_mainSlide", 4000);
+			})(window, window.jQuery);
+
+			// Full Page
+			$("#fullpage").fullpage({
+				licenseKey: "OPEN-SOURCE-GPLV3-LICENSE",
+				onLeave: function (index, nextIndex, direction) {
+					var slide = $(this),
+						winWidth = $(window).outerWidth();
+					// Scroll Down
+					if (direction === "down") {
+						if (slide[0].index == 0 || slide[0].index == 2) {
+							downHeaderColorRemove();
+						} else if (slide[0].index == 3) {
+							if (winWidth > 1100) {
+								$(".header").removeClass("color_type");
+								$(".header").css("background-color", "#f4f4f8");
+							} else {
+								$(".header").css("display", "none");
+							}
+						} else {
+							downHeaderColorAdd();
+						}
+					}
+					// Scroll Up
+					else if (direction === "up") {
+						if (slide[0].index == 3 || slide[0].index == 1) {
+							upHeaderColorAdd();
+							if (slide[0].index == 3) {
+								$(".header").css("background-color", "transparent");
+							}
+						} else if (slide[0].index == 4) {
+							$(".header").fadeIn(500);
+						} else {
+							upHeaderColorRemove();
+						}
+					}
+				},
+			});
+			function downHeaderColorRemove() {
+				$(".header").fadeOut(500);
+				$(".header").removeClass("color_type");
+				$(".header").fadeIn(500);
+			}
+			function downHeaderColorAdd() {
+				$(".header").fadeOut(500);
+				$(".header").addClass("color_type");
+				$(".header").fadeIn(500);
+			}
+			function upHeaderColorRemove() {
+				$(".header").css("opacity", "0");
+				$(".header").removeClass("color_type");
+				setTimeout(function () {
+					$(".header").animate(
+						{
+							opacity: "1",
+						},
+						950
+					);
+				}, 500);
+			}
+			function upHeaderColorAdd() {
+				$(".header").css("opacity", "0");
+				$(".header").addClass("color_type");
+				setTimeout(function () {
+					$(".header").animate(
+						{
+							opacity: "1",
+						},
+						950
+					);
+				}, 500);
+			}
+			$(window).on("load resize", function () {
+				$(".img").height($(window).height());
+			});
+
+			var t1, t2, t3, t4, t5, t6, t7;
+			// overlay
+			function overlayFunc() {
+				t1 = setTimeout(function () {
+					$(".slider_txt").removeClass("is_show");
+					$(".page_overlay").addClass("is_show");
+					t2 = setTimeout(function () {
+						$(".slick-current").addClass("is_active");
+						$(".page_overlay").addClass("is_hide");
+						$(".page_dimmed").addClass("is_show");
+						t4 = setTimeout(function () {
+							$(".page_overlay").removeClass("is_show");
+							$(".page_overlay").removeClass("is_hide");
+							t5 = setTimeout(function () {
+								$(".page_dimmed").addClass("is_hide");
+							}, 500);
+							t6 = setTimeout(function () {
+								$(".page_dimmed").removeClass("is_show");
+								$(".page_dimmed").removeClass("is_hide");
+							}, 900);
+						}, 700);
+						t3 = setTimeout(function () {
+							$(".slick-current .slider_txt").addClass("is_show");
+							$(".page_dimmed").addClass("is_hide");
+							t7 = setTimeout(function () {
+								$(".page_dimmed").removeClass("is_hide");
+							}, 1900);
+						});
+					}, 700);
+				});
+			}
+
+			var currentIdx;
+			// slider (first, init)
+			$(".slider_area").on("init", function (e, slick, currentSlide) {
+				overlayFunc();
+				$(".slick-current").removeClass("is_active").addClass("is_reset");
+				setTimeout(function () {
+					$(".slick-current").removeClass("is_reset").addClass("is_active");
+				});
+			});
+
+			$(".slider_area").slick({
+				arrows: false,
+				infinite: false,
+				autoplay: true,
+				autoplaySpeed: 5000,
+				pauseOnHover: false,
+			});
+
+			$(".slider_area").on("beforeChange", function () {
+				clearTimeout(t1);
+				clearTimeout(t2);
+				clearTimeout(t3);
+				clearTimeout(t4);
+				clearTimeout(t5);
+				clearTimeout(t6);
+				clearTimeout(t7);
+				overlayFunc();
+			});
+
+			$(".slider_area").on("afterChange", function (e, slick, currentSlide) {
+				currentIdx = (currentSlide ? currentSlide : 0) + 1;
+				$(".slick-slide")
+					.eq(currentIdx - 1)
+					.siblings()
+					.removeClass("is_active");
+				if (currentIdx === slick.slideCount) {
+					$(".slider_area").slick("slickSetOption", "autoplay", false, false);
+				}
+			});
+
+			$(".btn_round").on("click", function (e) {
+				$.fn.fullpage.moveSectionDown();
+			});
+		</script>
+
+		<!-- [D] map -->
+		<!-- Cliden API -->
+		<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=lodrrv2wiv"></script>
+		<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps-geocoder.js"></script>
+		<script type="text/javascript">
+			$(function () {
+				var position = new naver.maps.LatLng(37.4972957593, 127.0296193652); //position
+
+				var map = new naver.maps.Map("map", {
+						center: position,
+						zoom: 12,
+						zoomControl: true,
+						zoomControlOptions: {
+							style: naver.maps.ZoomControlStyle.SMALL,
+							position: naver.maps.Position.TOP_RIGHT,
+						},
+						logoControl: false,
+						scaleControl: false,
+						scrollWheel: false,
+					}),
+					marker = new naver.maps.Marker({
+						position: position,
+						map: map,
+						clickable: false,
+						icon: {
+							content: '<i class="ico_map_marker"></i>',
+							size: new naver.maps.Size(71, 47),
+							scaledSize: new naver.maps.Size(71, 47),
+							origin: new naver.maps.Point(0, 0),
+							anchor: new naver.maps.Point(63, 117),
+						},
+					});
+
+				naver.maps.Event.addListener(map, "dragstart", function (e) {
+					$.fn.fullpage.setAllowScrolling(false);
+				});
+
+				naver.maps.Event.addListener(map, "dragend", function (e) {
+					$.fn.fullpage.setAllowScrolling(true);
+				});
+			});
+		</script>
+	</body>
+</html>

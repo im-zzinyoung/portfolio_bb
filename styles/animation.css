@@ -1,0 +1,147 @@
+@-webkit-keyframes scrollAni {
+  0% {
+    bottom: 36px;
+  }
+  10% {
+    bottom: 29px;
+  }
+  20% {
+    bottom: 36px;
+  }
+  30% {
+    bottom: 29px;
+  }
+  40% {
+    bottom: 36px;
+  }
+  100% {
+    bottom: 36px;
+  }
+}
+
+@keyframes scrollAni {
+  0% {
+    bottom: 36px;
+  }
+  10% {
+    bottom: 29px;
+  }
+  20% {
+    bottom: 36px;
+  }
+  30% {
+    bottom: 29px;
+  }
+  40% {
+    bottom: 36px;
+  }
+  100% {
+    bottom: 36px;
+  }
+}
+
+@-webkit-keyframes scrollAni2 {
+  0% {
+    bottom: 24px;
+  }
+  10% {
+    bottom: 19px;
+  }
+  20% {
+    bottom: 24px;
+  }
+  30% {
+    bottom: 19px;
+  }
+  40% {
+    bottom: 24px;
+  }
+  100% {
+    bottom: 24px;
+  }
+}
+
+@keyframes scrollAni2 {
+  0% {
+    bottom: 24px;
+  }
+  10% {
+    bottom: 19px;
+  }
+  20% {
+    bottom: 24px;
+  }
+  30% {
+    bottom: 19px;
+  }
+  40% {
+    bottom: 24px;
+  }
+  100% {
+    bottom: 24px;
+  }
+}
+
+@-webkit-keyframes txtAni {
+  0% {
+    bottom: -50px;
+    opacity: 0;
+  }
+  100% {
+    bottom: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes txtAni {
+  0% {
+    bottom: -50px;
+    opacity: 0;
+  }
+  100% {
+    bottom: 0;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
